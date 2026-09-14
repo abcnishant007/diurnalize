@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "diurnalize"
+version = "0.1.0"
+description = "Mean-preserving diurnal disaggregation with Bayesian spatial-temporal shape modeling."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Diurnalize contributors"}]
+dependencies = [
+  "numpy",
+  "pandas",
+  "scipy",
+  "scikit-learn",
+  "pymc",
+  "arviz",
+  "xarray",
+  "matplotlib",
+  "pyyaml",
+  "netcdf4",
+  "pyarrow",
+  "geopandas",
+  "contextily",
+  "plotly",
+  "typer",
+  "flask",
+  "jinja2",
+  "pydantic",
+]
+
+[project.scripts]
+diurnalize = "diurnalize.cli:app"
+
+[tool.setuptools.packages.find]
+include = ["diurnalize*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

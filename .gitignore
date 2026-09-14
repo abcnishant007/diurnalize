@@ -209,6 +209,13 @@ tempCodeRunnerFile.py
 # PyPI configuration file
 .pypirc
 
+# Local real-data samples are useful for smoke testing but should not be
+# committed. Keep README files so users know how to obtain comparable data.
+data/real_data/**
+!data/real_data/
+!data/real_data/**/
+!data/real_data/**/README.md
+
 # Marimo
 marimo/_static/
 marimo/_lsp/
