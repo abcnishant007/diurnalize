@@ -7,13 +7,15 @@ from pathlib import Path
 import typer
 
 from .config import DataConfig, FitConfig, write_config
-from .fit import fit as fit_run
-from .predict import predict_grid
-from .report import write_report
 from .synthetic import generate_demo as generate_demo_data
-from .validate import validate as validate_run
 
 app = typer.Typer(no_args_is_help=True)
+
+
+def _missing_extra(command: str, exc: ModuleNotFoundError) -> None:
+    raise typer.BadParameter(
+        f"{command} requires optional modeling dependencies. Install with `pip install 'diurnalize[model]'`."
+    ) from exc
 
 
 @app.command("init-config")
@@ -35,21 +37,37 @@ def generate_demo(
 
 @app.command("fit")
 def fit(config: Path = typer.Option(..., "--config"), output: Path = typer.Option(..., "--output"), preset: str | None = typer.Option(None, "--preset")):
+    try:
+        from .fit import fit as fit_run
+    except ModuleNotFoundError as exc:
+        _missing_extra("fit", exc)
     fit_run(config, output, preset)
 
 
 @app.command("predict")
 def predict(run: Path = typer.Option(..., "--run"), grid: Path = typer.Option(..., "--grid"), output: Path = typer.Option(..., "--output")):
+    try:
+        from .predict import predict_grid
+    except ModuleNotFoundError as exc:
+        _missing_extra("predict", exc)
     predict_grid(run, grid, output)
 
 
 @app.command("validate")
 def validate(run: Path = typer.Option(..., "--run"), output: Path = typer.Option(..., "--output")):
+    try:
+        from .validate import validate as validate_run
+    except ModuleNotFoundError as exc:
+        _missing_extra("validate", exc)
     validate_run(run, output)
 
 
 @app.command("report")
 def report(run: Path = typer.Option(..., "--run"), output: Path = typer.Option(..., "--output")):
+    try:
+        from .report import write_report
+    except ModuleNotFoundError as exc:
+        _missing_extra("report", exc)
     write_report(run, output)
 
 

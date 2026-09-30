@@ -11,13 +11,18 @@ The hierarchical shape model uses wrapped Gaussian temporal bases, low-rank spat
 ## Quick Start
 
 ```bash
-pip install -e .
+pip install "diurnalize[model]"
 diurnalize generate-demo --output /tmp/diurnalize_demo --scenario null_shape --n-sensors 6 --n-days 2 --grid-resolution 5
 diurnalize fit --config /tmp/diurnalize_demo/config.yaml --output /tmp/diurnalize_run --preset quick
 diurnalize predict --run /tmp/diurnalize_run --grid /tmp/diurnalize_demo/baseline_grid.csv --output /tmp/diurnalize_run/predictions
 diurnalize validate --run /tmp/diurnalize_run --output /tmp/diurnalize_run/validation
 diurnalize report --run /tmp/diurnalize_run --output /tmp/diurnalize_run/report.html
 ```
+
+The base package can be installed with `pip install diurnalize` for data loading,
+configuration, synthetic demo generation, and CLI discovery. Install the
+`model` extra for Bayesian fitting, prediction exports, validation plots, and
+HTML reports.
 
 ## CSV Schemas
 
@@ -38,3 +43,12 @@ Optional baseline columns include `cell_id`, `region_id`, and `area_weight`.
 ## Citation
 
 If you find this package or the associated methods useful, please consider citing the associated paper. Paper reproduction workflows are intentionally kept outside this package.
+
+## Development
+
+```bash
+pip install -e ".[dev]"
+pytest
+python -m build
+python -m twine check dist/*
+```

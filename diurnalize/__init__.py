@@ -2,9 +2,6 @@
 
 from .config import FitConfig, ModelConfig, PreprocessConfig, SamplerConfig
 from .data import load_baseline_csv, load_sensor_csv
-from .fit import fit
-from .predict import predict_grid
-from .validate import validate
 
 __all__ = [
     "FitConfig",
@@ -17,3 +14,19 @@ __all__ = [
     "predict_grid",
     "validate",
 ]
+
+
+def __getattr__(name: str):
+    if name == "fit":
+        from .fit import fit
+
+        return fit
+    if name == "predict_grid":
+        from .predict import predict_grid
+
+        return predict_grid
+    if name == "validate":
+        from .validate import validate
+
+        return validate
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

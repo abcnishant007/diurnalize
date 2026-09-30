@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,29 +7,54 @@ name = "diurnalize"
 version = "0.1.0"
 description = "Mean-preserving diurnal disaggregation with Bayesian spatial-temporal shape modeling."
 readme = "README.md"
-requires-python = ">=3.10"
-license = {text = "MIT"}
+requires-python = ">=3.10,<3.13"
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [{name = "Diurnalize contributors"}]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering",
+]
 dependencies = [
   "numpy",
   "pandas",
   "scipy",
   "scikit-learn",
-  "pymc",
-  "arviz",
-  "xarray",
-  "matplotlib",
   "pyyaml",
-  "netcdf4",
-  "pyarrow",
-  "geopandas",
-  "contextily",
-  "plotly",
   "typer",
-  "flask",
-  "jinja2",
-  "pydantic",
 ]
+
+[project.optional-dependencies]
+model = [
+  "arviz",
+  "jinja2",
+  "matplotlib",
+  "netcdf4",
+  "pymc",
+  "xarray",
+]
+dev = [
+  "arviz",
+  "build",
+  "jinja2",
+  "matplotlib",
+  "netcdf4",
+  "pymc",
+  "pytest",
+  "twine",
+  "xarray",
+]
+
+[project.urls]
+Homepage = "https://github.com/abcnishant007/diurnalize"
+Repository = "https://github.com/abcnishant007/diurnalize"
+Issues = "https://github.com/abcnishant007/diurnalize/issues"
 
 [project.scripts]
 diurnalize = "diurnalize.cli:app"
